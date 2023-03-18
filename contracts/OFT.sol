@@ -4,7 +4,6 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 import "./interfaces/IOmnic.sol";
@@ -17,7 +16,6 @@ contract OFT is IOFT, ERC165, ERC20, Ownable{
     // omnic gateway
     uint32 public chainId;
     IOmnic omnic;
-    address proxyCanister;
 
     // chain id => token address
     mapping(uint32 => bytes32) tokenAddrs;
@@ -29,22 +27,21 @@ contract OFT is IOFT, ERC165, ERC20, Ownable{
 
     /********************* modifier ****************************/
 
-    modifier onlyProxyCanister() {
+    modifier onlyOmnicGateway() {
         require(
-            msg.sender == address(proxyCanister),
-            "Router: caller must be IC Bridge canister"
+            msg.sender == address(omnic),
+            "Omnic: caller must be omnic gateway address"
         );
         _;
     }
 
     // constructor
-    constructor(string memory _name, string memory _symbol, address _omnic, address _proxyCanister) ERC20(_name, _symbol) {
+    constructor(string memory _name, string memory _symbol, address _omnic) ERC20(_name, _symbol) {
         omnic = IOmnic(_omnic);
-        proxyCanister = _proxyCanister;
         chainId = uint32(block.chainid);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view override(ERC165) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view override(ERC165, IERC165) returns (bool) {
         return interfaceId == type(IOFT).interfaceId || interfaceId == type(IERC20).interfaceId || super.supportsInterface(interfaceId);
     }
 
@@ -67,7 +64,7 @@ contract OFT is IOFT, ERC165, ERC20, Ownable{
         bytes32 _srcSenderAddress,
         uint32 _nonce,
         bytes calldata payload
-    ) public onlyProxyCanister {
+    ) public onlyOmnicGateway {
         _handle_transfer(_srcChainId, _srcSenderAddress, _nonce, payload);
     }
 

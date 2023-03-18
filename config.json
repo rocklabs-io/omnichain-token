@@ -1,0 +1,29 @@
+{
+	"OmnicCanisterId": "y3lks-laaaa-aaaam-aat7q-cai",
+	"OmnicCanisterAddr": "0x06fb9111d125fbb697ea39ffa585246d1e2e9143",
+	"ChainIds": {
+		"ic": 0,
+		"goerli": 5,
+		"mumbai": 80001,
+		"arbi_goerli": 421613,
+		"op_goerli": 420
+	},
+	"networks": {
+		"goerli": {
+			"Omnic": "0xc7D718dC3C9248c91813A98dCbFEC6CF57619520",
+			"OFT": "0x55b78d337EB2F12dB114ffd24Ac5ba9C48F26033"
+		},
+		"mumbai": {
+			"Omnic": "0x2F711bEbA7a30242f4ba24544eA3869815c41413",
+			"OFT": "0x225512d893e6A87971e3497E5b8BD15a2E1e7092"
+		},
+		"arbi_goerli": {
+			"Omnic": "0x0AA014fB917b93f17E2B98A7ee15D24fE9aD40C8",
+			"OFT": ""
+		},
+		"op_goerli": {
+			"Omnic": "0x0AA014fB917b93f17E2B98A7ee15D24fE9aD40C8",
+			"OFT": ""
+		}
+	}
+}

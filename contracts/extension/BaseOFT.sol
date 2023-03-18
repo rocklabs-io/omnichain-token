@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "../OFT.sol";
 
 contract BasedOFT is OFT {
-    constructor(string memory _name, string memory _symbol, address _omnic, address _proxyCanister) OFT(_name, _symbol, _omnic, _proxyCanister) {}
+    constructor(string memory _name, string memory _symbol, address _omnic) OFT(_name, _symbol, _omnic) {}
 
     function circulatingSupply() public view virtual override returns (uint) {
         unchecked {

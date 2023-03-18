@@ -3,11 +3,12 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 /**
  * @dev Interface of the OFT standard
  */
-interface IOFT is IERC20 {
+interface IOFT is IERC20, IERC165 {
     function sendFrom(address _from, uint32 _dstChainId, uint256 _amount, bytes32 _to) external payable;
 
     /**
