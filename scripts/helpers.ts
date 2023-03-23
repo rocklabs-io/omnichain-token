@@ -26,7 +26,8 @@ export const updateConfig = function (
   if (config.networks[network] == undefined) {
     config.networks[network] = {
       Omnic: "",
-      OFT: ""
+      OFT: "",
+      ONFT: "",
     };
   }
   config.networks[network][contract] = addr;
