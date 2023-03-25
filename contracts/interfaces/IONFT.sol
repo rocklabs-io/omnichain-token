@@ -8,10 +8,20 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 /**
  * @dev Interface of the OFT standard
  */
-interface IONFT721 is IERC721, IERC165 {
+interface IONFT721 is IERC165, IERC721 {
     // send token `_tokenId` to (`_dstChainId`, `_to`) from `_from`
-    function sendFrom(address _from, uint32 _dstChainId, uint256 _tokenId, bytes32 _to) external payable;
-    //send tokens `_tokenIds[]` to (`_dstChainId`, `_to`) from `_from`
-    function sendBatchFrom(address _from, uint32 _dstChainId, uint256[] calldata _tokenIds, bytes32 _to) external payable;
+    function sendFrom(
+        address _from,
+        uint32 _dstChainId,
+        uint256 _tokenId,
+        bytes32 _to
+    ) external payable;
 
+    //send tokens `_tokenIds[]` to (`_dstChainId`, `_to`) from `_from`
+    function sendBatchFrom(
+        address _from,
+        uint32 _dstChainId,
+        uint256[] calldata _tokenIds,
+        bytes32 _to
+    ) external payable;
 }

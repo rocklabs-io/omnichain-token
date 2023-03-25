@@ -12,7 +12,7 @@ import "./interfaces/IONFT.sol";
 import {TypeCasts} from "./utils/TypeCasts.sol";
 
 
-contract ONFT721 is IONFT721, ERC721, ERC165{
+contract ONFT721 is ERC165, ERC721, IONFT721, Ownable{
     // omnic gateway
     uint32 public chainId;
     IOmnic omnic;
@@ -41,23 +41,8 @@ contract ONFT721 is IONFT721, ERC721, ERC165{
         chainId = uint32(block.chainid);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC165) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC165, IERC165) returns (bool) {
         return interfaceId == type(IONFT721).interfaceId || super.supportsInterface(interfaceId);
-    }
-
-    function _debitFrom(address _from, uint32, bytes32, uint _tokenId) internal virtual {
-        require(_isApprovedOrOwner(_msgSender(), _tokenId), "ONFT721: send caller is not owner nor approved");
-        require(ERC721.ownerOf(_tokenId) == _from, "ONFT721: send from incorrect owner");
-        _transfer(_from, address(this), _tokenId);
-    }
-
-    function _creditTo(uint16, address _toAddress, uint _tokenId) internal virtual {
-        require(!_exists(_tokenId) || (_exists(_tokenId) && ERC721.ownerOf(_tokenId) == address(this)));
-        if (!_exists(_tokenId)) {
-            _safeMint(_toAddress, _tokenId);
-        } else {
-            _transfer(address(this), _toAddress, _tokenId);
-        }
     }
 
     function sendFrom(address _from, uint32 _dstChainId, uint256 _tokenId, bytes32 _to) public payable {
@@ -115,7 +100,6 @@ contract ONFT721 is IONFT721, ERC721, ERC165{
 
     function _send(address _from, uint32 _dstChainId, uint256[] memory _tokenIds, bytes32 _to) internal virtual {
         require(_tokenIds.length > 0, "Paranic: tokenIds[] is empty");
-        require(_tokenIds.length == 1 || _tokenIds.length <= dstChainIdToBatchLimit[_dstChainId], "ONFT721: batch size exceeds dst batch limit");
         require(tokenAddrs[_dstChainId] != bytes32(0x0), "destination chain not support.");
 
         for (uint i = 0; i < _tokenIds.length; i++) {
@@ -139,7 +123,7 @@ contract ONFT721 is IONFT721, ERC721, ERC165{
             address(0x0) // pay in native token
         );
 
-        emit SendToChain(_dstChainId, _from, _to, amount);
+        emit SendToChain(_dstChainId, _from, _to, _tokenIds);
     }
 
     function _handle_transfer(uint32, bytes32, uint64, bytes memory _payload) internal {

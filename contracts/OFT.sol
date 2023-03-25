@@ -116,7 +116,7 @@ contract OFT is IOFT, ERC165, ERC20, Ownable{
     function _handle_transfer(uint32 _srcChainId, bytes32, uint64, bytes memory _payload) internal {
         (, uint32 localChain, bytes32 tokenAddr, uint amount, bytes32 to) = abi.decode(_payload, (uint32, uint32, bytes32, uint, bytes32));
         require(localChain == chainId, "dst chain is not this chain");
-        require(tokenAddr == tokenAddrs[srcChain]), "wrong token address");
+        require(tokenAddr == tokenAddrs[_srcChainId], "wrong token address");
 
         address toAddr = TypeCasts.bytes32ToAddress(to);
 
