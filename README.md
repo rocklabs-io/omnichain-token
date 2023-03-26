@@ -18,8 +18,8 @@ yarn install
 
 The `OmnichainFungibleToken` has two varieties of deployments:
 
-  1. `BasedOFT.sol` - The token supply is minted (on deployment) on the `base` chain. Other chains deploy with 0 supply initially. 
-  2. `OFT.sol` - At deploy time, any quantity of tokens can be minted, regardless of chain.    
+    1. `BasedOFT.sol` - The token supply is minted (on deployment) on the `base` chain. Other chains deploy with 0 supply initially. 
+    2. `OFT.sol` - At deploy time, any quantity of tokens can be minted, regardless of chain.    
 
  For the `BasedOFT`, the initial supply will be minted entirely on the `Base Chain` on deployment. All tokens transferred out of the `base` chain will be locked in the contract (and minted on destination), and tokens transferred out of `other` chains will be burned on that chain. Tokens returning to the `base` chain will be `unlocked` and transferred to the destination address. This results in the `Base chain` being like the home base, hence the name.
 
@@ -33,23 +33,61 @@ In the event a chain goes rogue, Ethereum will be the final source of truth for 
 
 > WARNING: **You must perform the setSupportChain() (step 2).**
 
-1. Deploy two contracts:  ```goerli``` is the `base` chain. Fuji is the oft for the other chain.
+1. Deploy two contracts:  ```mumbai``` is the `base` chain. Fuji is the oft for the other chain.
 
 ```angular2html
-npx hardhat --network goerli scripts/deploy-baseOFT.ts
-npx hardhat --network mumbai scripts/deploy-OFT.ts
+npx hardhat --network mumbai deploy --tags ExampleBasedOFT
+npx hardhat --network goerli deploy --tags ExampleOFT
 ```
 
 2. Set the "trusted token" (destination OFT token address) so each of them can receive messages from one another, and `only` one another.
 
 ```angular2html
-npx hardhat run --network goerli scripts/set-trust-token.ts
-npx hardhat run --network mumbai scripts/set-trust-token.ts
+npx hardhat --network goerli setTrustedToken --target-network mumbai --local-contract ExampleOFT --remote-contract ExampleBasedOFT --name OFT
+npx hardhat --network mumbai setTrustedToken --target-network goerli --local-contract ExampleBasedOFT --remote-contract ExampleOFT --name OFT
 ```
 
 3. Send tokens from goerli to mumbai
 
 ```angular2html
-npx hardhat run --network goerli scripts/oftsend.ts
+npx hardhat --network mumbai oftSend --target-network goerli --amount 10 --local-contract ExampleBasedOFT --remote-contract ExampleOFT
+```
+
+
+
+# OmnichainNonFungibleToken721 (ONFT721)
+
+This ONFT contract allows minting of `nftId`s on separate chains. To ensure two chains can not mint the same `nfId` each contract on each chain is only allowed to mint `nftIds` in certain ranges. Check `constants/onftArgs.json` for the specific test configuration used in this demo.
+
+## UniversalONFT.sol
+
+> WARNING: **You must perform the setTrustedRemote() (step 2).**
+
+1. Deploy two contracts:
+
+```angular2html
+ npx hardhat --network goerli deploy --tags ExampleONFT721
+ npx hardhat --network mumbai deploy --tags ExampleONFT721
+```
+
+2. Set the "trusted token" (destination OFT token address) so each of them can receive messages from one another, and `only` one another.
+
+```angular2html
+npx hardhat --network goerli setTrustedToken --target-network mumbai --contract ExampleONFT721 --name ONFT
+npx hardhat --network mumbai setTrustedToken --target-network goerli --contract ExampleONFT721 --name ONFT
+```
+
+3. Mint an NFT on each chain!
+
+```angular2html
+npx hardhat --network goerli onftMint --contract ExampleONFT721
+npx hardhat --network mumbai onftMint --contract ExampleONFT721
+```
+
+4. Send ONFT across chains
+
+```angular2html
+npx hardhat --network goerli onftSend --target-network mumbai --token-id 21 --contract ExampleONFT721
+npx hardhat --network mumbai onftSend --target-network goerli --token-id 1 --contract ExampleONFT721 
 ```
 

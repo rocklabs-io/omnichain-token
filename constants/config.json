@@ -8,14 +8,18 @@
 		"arbi_goerli": 421613,
 		"op_goerli": 420
 	},
+	"BaseChain": "mumbai",
+	"GlobalSupply": "1000000",
 	"networks": {
 		"goerli": {
 			"Omnic": "0xc7D718dC3C9248c91813A98dCbFEC6CF57619520",
-			"OFT": "0x55b78d337EB2F12dB114ffd24Ac5ba9C48F26033"
+			"OFT": "0xc2196AbF0aFEc4Cb63dDDA218afF8DB34473E36A",
+			"ONFT": "0x3b4BB907807ED37Af8cbCF2eceC875D94e22f3f5"
 		},
 		"mumbai": {
 			"Omnic": "0x2F711bEbA7a30242f4ba24544eA3869815c41413",
-			"OFT": "0x225512d893e6A87971e3497E5b8BD15a2E1e7092"
+			"OFT": "0xfff3c4AE718265Bc77d76da00c6E8c5396913c2F",
+			"ONFT": "0x143A5b4bEA8F4f4bf71107D05Fe193b874526c08"
 		},
 		"arbi_goerli": {
 			"Omnic": "0x0AA014fB917b93f17E2B98A7ee15D24fE9aD40C8",

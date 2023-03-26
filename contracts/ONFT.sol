@@ -65,13 +65,8 @@ contract ONFT721 is ERC165, ERC721, IONFT721, Ownable{
 
     /******************************  owner call  ***************************************/
 
-    function setSupportChainByBytes(uint32 chain, bytes32 addr) public onlyOwner(){
+    function setSupportChain(uint32 chain, bytes32 addr) public onlyOwner(){
         tokenAddrs[chain] = addr;
-    }
-
-    // support evm chains
-    function setSupportChainByAddress(uint32 chain, address addr) public onlyOwner(){
-        tokenAddrs[chain] = TypeCasts.addressToBytes32(addr);
     }
 
     /******************************  internal function  ***************************************/

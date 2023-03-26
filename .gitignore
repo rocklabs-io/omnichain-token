@@ -1,6 +1,6 @@
 node_modules
 src
-.env
+deployments
 coverage
 coverage.json
 typechain
@@ -10,3 +10,6 @@ typechain-types
 cache
 artifacts
 
+
+.env
+*.lock

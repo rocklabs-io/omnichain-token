@@ -1,0 +1,10 @@
+{
+  "mumbai": {
+    "startMintId": 1,
+    "endMintId": 20
+  },
+  "goerli": {
+    "startMintId": 21,
+    "endMintId": 40
+  }
+}
