@@ -1,5 +1,7 @@
 # Paranic Omnichain Fungible Token Demo
 
+* Note: This repo refers to [layerzero](https://github.com/LayerZero-Labs/solidity-examples)
+
  ### Install
 
 ```shell
@@ -59,7 +61,7 @@ npx hardhat --network mumbai oftSend --target-network goerli --amount 10 --local
 
 This ONFT contract allows minting of `nftId`s on separate chains. To ensure two chains can not mint the same `nfId` each contract on each chain is only allowed to mint `nftIds` in certain ranges. Check `constants/onftArgs.json` for the specific test configuration used in this demo.
 
-## UniversalONFT.sol
+## ONFT.sol
 
 > WARNING: **You must perform the setTrustedRemote() (step 2).**
 
@@ -91,3 +93,17 @@ npx hardhat --network goerli onftSend --target-network mumbai --token-id 21 --co
 npx hardhat --network mumbai onftSend --target-network goerli --token-id 1 --contract ExampleONFT721 
 ```
 
+# Testnet contracts
+
+OFT and ONFT contract is deployed in the following address.
+
+* mumbai
+    ```angular2html
+    OFT base contract address: 0xfff3c4AE718265Bc77d76da00c6E8c5396913c2F
+    ONFT contract address: 0x143A5b4bEA8F4f4bf71107D05Fe193b874526c08
+    ```
+* goerli
+    ```angular2html
+    OFT contract address: 0x4E07ADB191a616215869d5DF0ed97730c8a20706
+    ONFT contract address: 0x3b4BB907807ED37Af8cbCF2eceC875D94e22f3f5
+    ```
