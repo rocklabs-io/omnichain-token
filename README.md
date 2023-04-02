@@ -1,6 +1,5 @@
 # Paranic Omnichain Fungible Token Demo
 
-* Note: This repo refers to [layerzero](https://github.com/LayerZero-Labs/solidity-examples)
 
  ### Install
 
@@ -107,3 +106,4 @@ OFT and ONFT contract is deployed in the following address.
     OFT contract address: 0x4E07ADB191a616215869d5DF0ed97730c8a20706
     ONFT contract address: 0x3b4BB907807ED37Af8cbCF2eceC875D94e22f3f5
     ```
+* Reference: [layerzero](https://github.com/LayerZero-Labs/solidity-examples)
